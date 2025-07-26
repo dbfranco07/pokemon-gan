@@ -1,0 +1,11 @@
+# Virtual environment
+.venv/
+
+# checkpoint file
+checkpoint/
+
+# images file
+images/
+
+journal.txt
+scrape.ipynb
