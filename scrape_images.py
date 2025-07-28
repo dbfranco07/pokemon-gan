@@ -28,7 +28,6 @@ def get_pokemon_names(driver):
     names = []
     for n in elem:
         name = n.get_attribute('href').split('/')[-1].replace(' ', '-')
-        # name = n.text.lower().replace(' ', '-')
         names.append(name)
 
     logging.info(f'Extracted {len(names)} pokemon names')

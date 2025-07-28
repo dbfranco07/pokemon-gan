@@ -6,6 +6,20 @@ checkpoint/
 
 # images file
 images/
+no-gif-images/
+no-gif-images2/
+sample-downloaded-images/
+
+dcgan_mnist/
+lsgan_mnist/
+
+lib/
 
 journal.txt
 scrape.ipynb
+
+gan-test.py
+exploration.ipynb
+lsgan-mnist-5.2.1.py
+
+lsgan_mnist.h5
