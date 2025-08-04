@@ -1,25 +1,15 @@
 # Virtual environment
 .venv/
 
-# checkpoint file
-checkpoint/
-
 # images file
 images/
 no-gif-images/
-no-gif-images2/
-sample-downloaded-images/
+archives/
 
 dcgan_mnist/
 lsgan_mnist/
-
-lib/
+fake_images/
 
 journal.txt
 scrape.ipynb
 
-gan-test.py
-exploration.ipynb
-lsgan-mnist-5.2.1.py
-
-lsgan_mnist.h5
