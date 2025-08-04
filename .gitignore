@@ -8,7 +8,7 @@ archives/
 
 dcgan_mnist/
 lsgan_mnist/
-fake_images/
+# fake_images/
 
 journal.txt
 scrape.ipynb
