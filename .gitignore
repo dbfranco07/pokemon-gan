@@ -3,7 +3,7 @@
 
 # images file
 images/
-no-gif-images/
+# no-gif-images/
 archives/
 
 dcgan_mnist/
