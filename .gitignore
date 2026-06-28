@@ -2,21 +2,10 @@
 .venv/
 .DS_Store
 
-# images file
-images/
 # no-gif-images/
-archive/
+archive
+checkpoint
+images
 
-dcgan_mnist/
-lsgan_mnist/
-# fake_images/
-
-journal.txt
-scrape.ipynb
-
-no-gif-images.zip
-no-gif-images/*
-fake_images/archive/*
-checkpoint/*
 
 
