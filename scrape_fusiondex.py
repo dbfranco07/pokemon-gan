@@ -41,7 +41,7 @@ logging.basicConfig(
 BASE_URL = "https://fusiondex.org"
 USER_AGENT = "Mozilla/5.0 (compatible; pokemon-gan-research-scraper/1.0)"
 
-IMAGES_DIR = "images/fusiondex"
+DEFAULT_IMAGES_DIR = "images/fusiondex"
 CHECKPOINT_DIR = "checkpoint"
 SPRITES_CSV = os.path.join(CHECKPOINT_DIR, "fusiondex_sprites.csv")
 FUSION_QUEUE_CSV = os.path.join(CHECKPOINT_DIR, "fusiondex_fusion_queue.csv")
@@ -222,7 +222,7 @@ def save_gallery_entries(session, writer, csv_file, written_keys,
     return count
 
 
-def run_phase_base(session, delay, writer, csv_file, written_keys, limit):
+def run_phase_base(session, delay, writer, csv_file, written_keys, limit, images_dir):
     """Walks base Pokemon pages: downloads their gallery, queues fusion pairs."""
     base_done = load_lines(BASE_DONE_FILE)
     queue_is_new = not os.path.exists(FUSION_QUEUE_CSV) or os.path.getsize(FUSION_QUEUE_CSV) == 0
@@ -252,7 +252,7 @@ def run_phase_base(session, delay, writer, csv_file, written_keys, limit):
             name, dex_id = parse_page_header(soup)
 
             entries = parse_gallery(soup)
-            image_dir = os.path.join(IMAGES_DIR, "base", slug)
+            image_dir = os.path.join(images_dir, "base", slug)
             n_images = save_gallery_entries(
                 session, writer, csv_file, written_keys,
                 "base", slug, slug, name, dex_id, entries, image_dir,
@@ -278,7 +278,7 @@ def run_phase_base(session, delay, writer, csv_file, written_keys, limit):
         queue_file.close()
 
 
-def run_phase_fusions(session, delay, writer, csv_file, written_keys, limit):
+def run_phase_fusions(session, delay, writer, csv_file, written_keys, limit, images_dir):
     """Walks queued fusion pages and downloads their gallery images."""
     if not os.path.exists(FUSION_QUEUE_CSV):
         logging.info("Phase B: no fusion queue found yet, run phase A first")
@@ -299,7 +299,7 @@ def run_phase_fusions(session, delay, writer, csv_file, written_keys, limit):
         name, dex_id = parse_page_header(soup)
 
         entries = parse_gallery(soup)
-        image_dir = os.path.join(IMAGES_DIR, "fusions", f"{head}+{body}")
+        image_dir = os.path.join(images_dir, "fusions", f"{head}+{body}")
         n_images = save_gallery_entries(
             session, writer, csv_file, written_keys,
             "fusion", head, body, name, dex_id, entries, image_dir,
@@ -311,6 +311,8 @@ def run_phase_fusions(session, delay, writer, csv_file, written_keys, limit):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--images-dir", type=str, default=DEFAULT_IMAGES_DIR,
+                         help=f"Directory to save downloaded images to (default: {DEFAULT_IMAGES_DIR})")
     parser.add_argument("--delay", type=float, default=0.5,
                          help="Seconds to sleep between HTTP requests (default: 0.5)")
     parser.add_argument("--max-base", type=int, default=None,
@@ -324,7 +326,7 @@ def main():
     args = parser.parse_args()
 
     os.makedirs(CHECKPOINT_DIR, exist_ok=True)
-    os.makedirs(IMAGES_DIR, exist_ok=True)
+    os.makedirs(args.images_dir, exist_ok=True)
 
     session = build_session()
     written_keys = load_written_keys(SPRITES_CSV)
@@ -332,9 +334,11 @@ def main():
 
     try:
         if not args.skip_base:
-            run_phase_base(session, args.delay, writer, csv_file, written_keys, args.max_base)
+            run_phase_base(session, args.delay, writer, csv_file, written_keys,
+                            args.max_base, args.images_dir)
         if not args.skip_fusions:
-            run_phase_fusions(session, args.delay, writer, csv_file, written_keys, args.max_fusions)
+            run_phase_fusions(session, args.delay, writer, csv_file, written_keys,
+                               args.max_fusions, args.images_dir)
         logging.info("Done.")
     except KeyboardInterrupt:
         logging.warning("Interrupted by user. Progress is saved -- rerun the script to continue.")
