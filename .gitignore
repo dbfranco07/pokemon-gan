@@ -2,9 +2,13 @@
 .venv/
 .DS_Store
 *.pyc
+__pycache__
+
 # no-gif-images/
 archive
 checkpoint
+checkpoints
+samples
 images
 
 
