@@ -5,7 +5,7 @@
 # images file
 images/
 # no-gif-images/
-archives/
+archive/
 
 dcgan_mnist/
 lsgan_mnist/
