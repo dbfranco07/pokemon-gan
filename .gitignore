@@ -1,5 +1,6 @@
 # Virtual environment
 .venv/
+.DS_Store
 
 # images file
 images/
@@ -12,4 +13,10 @@ lsgan_mnist/
 
 journal.txt
 scrape.ipynb
+
+no-gif-images.zip
+no-gif-images/*
+fake_images/archive/*
+checkpoint/*
+
 
