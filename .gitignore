@@ -8,7 +8,7 @@ __pycache__
 archive
 checkpoint
 checkpoints
-samples
+samples/diffusion/*
 images
 
 logs
