@@ -14,3 +14,6 @@ images
 logs
 runs
 
+# web app persisted sprites
+webapp/saved
+

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sprite Generator</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <div class="app">
+    <!-- Control rail -->
+    <aside class="rail">
+      <h1>Sprite&nbsp;Lab</h1>
+      <p class="sub">Diffusion sprite generator</p>
+
+      <div class="field">
+        <label for="seed">Seed</label>
+        <div class="seed-row">
+          <input id="seed" type="number" min="0" step="1" placeholder="random" />
+          <button id="dice" class="ghost" title="Randomize (clear seed)">🎲</button>
+        </div>
+        <small>Same seed → same sprite, on any machine.</small>
+      </div>
+
+      <div class="field">
+        <label for="steps">DDIM steps <span id="stepsVal">50</span></label>
+        <input id="steps" type="range" min="5" max="200" step="5" value="50" />
+      </div>
+
+      <button id="generate" class="primary">Generate</button>
+      <button id="save" class="secondary" disabled>Save sprite</button>
+
+      <div class="spacer"></div>
+      <div id="status" class="status">connecting…</div>
+    </aside>
+
+    <!-- Main viewer / gallery -->
+    <main class="main">
+      <div class="tabs">
+        <button id="tabCurrent" class="tab active">Viewer</button>
+        <button id="tabSaved" class="tab">Saved</button>
+      </div>
+
+      <!-- Viewer -->
+      <section id="viewerPane" class="pane">
+        <div class="toolbar">
+          <button id="zoomOut" class="ghost" title="Zoom out">−</button>
+          <button id="zoomIn" class="ghost" title="Zoom in">+</button>
+          <button id="fit" class="ghost" title="Fit">Fit</button>
+          <button id="actual" class="ghost" title="1:1">1:1</button>
+          <span id="meta" class="meta"></span>
+        </div>
+        <div id="stage" class="stage">
+          <img id="sprite" class="sprite hidden" alt="generated sprite" />
+          <div id="placeholder" class="placeholder">
+            Press <b>Generate</b> to create a sprite.
+          </div>
+          <div id="spinner" class="spinner hidden"></div>
+        </div>
+      </section>
+
+      <!-- Saved gallery -->
+      <section id="savedPane" class="pane hidden">
+        <div id="gallery" class="gallery"></div>
+        <div id="galleryEmpty" class="placeholder hidden">No saved sprites yet.</div>
+      </section>
+    </main>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
