@@ -11,5 +11,6 @@ checkpoints
 samples
 images
 
-
+logs
+runs
 
