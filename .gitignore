@@ -16,4 +16,5 @@ runs
 
 # web app persisted sprites
 webapp/saved
-
+gifs/*/*.png
+gifs/*/*.txt
